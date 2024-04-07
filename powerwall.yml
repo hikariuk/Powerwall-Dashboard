@@ -34,6 +34,17 @@ services:
         env_file:
             - pypowerwall.env
 
+    soliscloudproxy:
+        image: nas.jm-crowther.co.uk:5050/hikari/solis-cloud-proxy:latest
+        container_name: solis-cloud-proxy
+        hostname: soliscloudproxy
+        restart: unless-stopped
+        user: "${PWD_USER:-1000:1000}"
+        ports:
+            - "${SOLISCLOUDPROXY_PORTS:-32312:8080}"
+        env_file: 
+            - soliscloudproxy.env
+
     telegraf:
         image: telegraf:1.28.2
         container_name: telegraf
