@@ -12,6 +12,7 @@ INFLUXDB_ENV_FILE="influxdb.env"
 TELEGRAF_LOCAL="telegraf.local"
 PW_ENV_FILE="pypowerwall.env"
 GF_ENV_FILE="grafana.env"
+SC_ENV_FILE="soliscloudproxy.env"
 
 if [ ! -f VERSION ]; then
     echo "ERROR: Missing VERSION file. Setup must run from installation directory."
@@ -262,6 +263,36 @@ if [ ! -f ${PW_ENV_FILE} ]; then
     echo "PW_DEBUG=no" >> ${PW_ENV_FILE}
     echo "PW_STYLE=grafana-dark" >> ${PW_ENV_FILE}
 fi
+
+# Solis Cloud Proxy settings
+if [ -f ${SC_ENV_FILE} ]; then
+    echo "Current Solis Cloud Credentials:"
+    echo ""
+    cat ${SC_ENV_FILE}
+    echo ""
+    read -r -p "Update these credentials? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        rm ${SC_ENV_FILE}
+        echo ""
+    else
+        echo "Using existing ${SC_ENV_FILE}."
+    fi
+fi
+
+# Create Solis Cloud Proxy settings
+if [ ! -f ${SC_ENV_FILE} ]; then
+    echo "Enter Solis Cloud Monitoring API details..."
+    while [ -z "${SC_APPID}" ]; do
+        read -p 'App ID: ' SC_APPID
+    done
+    
+    while [ -z "${SC_APPSECRET}" ]; do
+        read -p 'App Secret: ' SC_APPSECRET
+    done
+
+    echo "SOLISCLOUDPROXY_SOLISCLOUD__APPID=${SC_APPID}" >> ${SC_ENV_FILE}
+    echo "SOLISCLOUD_SOLISCLOUD__APPSECRET=${SC_APPSECRET}" >> ${SC_ENV_FILE}
+fi 
 
 # Create default telegraf local file if needed.
 if [ ! -f ${TELEGRAF_LOCAL} ]; then
