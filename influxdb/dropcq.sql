@@ -23,3 +23,5 @@ DROP CONTINUOUS QUERY cq_pod1 ON powerwall
 DROP CONTINUOUS QUERY cq_pod2 ON powerwall
 DROP CONTINUOUS QUERY cq_pod3 ON powerwall
 DROP CONTINUOUS QUERY cq_alerts ON powerwall
+DROP CONTINUOUS QUERY cq_soliscloud_strings ON powerwall
+DROP CONTINUOUS QUERY cq_soliscloud_grid ON powerwall 

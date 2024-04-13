@@ -35,7 +35,7 @@ services:
             - pypowerwall.env
 
     soliscloudproxy:
-        image: nas.jm-crowther.co.uk:5050/hikari/solis-cloud-proxy:latest
+        image: hikariuk/solis-cloud-proxy:latest
         container_name: solis-cloud-proxy
         hostname: soliscloudproxy
         restart: unless-stopped
